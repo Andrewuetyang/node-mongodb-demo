@@ -1,11 +1,11 @@
 import express from 'express'
-import TodoList from '../controller/test/todo'
+import todoList from '../controller/test/todo'
 
 const router = express.Router()
 
-router.post('/todo/add', TodoList.add)
-router.post('/todo/delete', TodoList.delete)
-router.post('/todo/update', TodoList.update)
-router.get('/todo/list', TodoList.list)
+router.post('/todo/add', todoList.add)
+router.post('/todo/delete', todoList.delete)
+router.post('/todo/update', todoList.update)
+router.get('/todo/list', todoList.list)
 
 export default router

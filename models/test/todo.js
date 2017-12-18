@@ -4,7 +4,7 @@ const TodoSchema = new mongoose.Schema({
   id: Number,
   status: Number,
   content: String,
-  time: Number
+  time: {type: Date, default: Date.now}
 })
 
 const Todo = mongoose.model('Todo', TodoSchema)

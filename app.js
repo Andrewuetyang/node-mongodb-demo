@@ -1,6 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import session from 'express-session'
+import connectMongo from 'connect-mongo'
 import cookieParser from 'cookie-parser'
 import history from 'connect-history-api-fallback'
 const config = require('config-lite')(__dirname)
@@ -10,11 +11,22 @@ import routes from './routes'
 
 const app = express()
 
+const MongoStore = connectMongo(session);
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(history())
 app.use(express.static('./public'))
+app.use(session({
+	name: config.session.name,
+	secret: config.session.secret,
+	resave: true,
+	saveUninitialized: false,
+	cookie: config.session.cookie,
+	store: new MongoStore({
+		url: config.url
+	})
+}))
 routes(app)
 
 app.all('*', (req, res, next) => {
